@@ -1,0 +1,54 @@
+{
+  "name": "usecraft",
+  "version": "1.0.0",
+  "description": "A small React hook for debouncing a value.",
+  "keywords": [
+    "react",
+    "hooks",
+    "debounce",
+    "use-debounce",
+    "react-hooks"
+  ],
+  "license": "MIT",
+  "author": "zeynep bas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeynepbass/usecraft.git"
+  },
+  "bugs": "https://github.com/zeynepbass/usecraft/issues",
+  "homepage": "https://github.com/zeynepbass/usecraft#readme",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "jsdom": "^29.1.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}
