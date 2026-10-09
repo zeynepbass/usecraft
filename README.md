@@ -1,16 +1,16 @@
 # usecraft
 
-A small React hook for debouncing a value.
+Değerleri belirli bir süre boyunca değişmeden kaldıktan sonra güncellemek için kullanılan küçük bir React hook'u.
 
 [![CI](https://github.com/zeynepbass/usecraft/actions/workflows/ci.yml/badge.svg)](https://github.com/zeynepbass/usecraft/actions/workflows/ci.yml)
 
-## Installation
+## Kurulum
 
 ```sh
 npm install usecraft
 ```
 
-## Usage
+## Kullanım
 
 ```jsx
 import { useDebounce } from 'usecraft';
@@ -22,27 +22,24 @@ const debouncedValue = useDebounce(value, 300);
 
 ### `useDebounce(value, delay?)`
 
-#### Parameters
+#### Parametreler
 
-| Name    | Type     | Default | Description                                               |
-| ------- | -------- | ------- | --------------------------------------------------------- |
-| `value` | `any`    | –       | The value to debounce.                                    |
-| `delay` | `number` | `300`   | Time in milliseconds to wait after the last value change. |
+| Ad | Tür | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `value` | `any` | – | Gecikmeli olarak güncellenecek değer. |
+| `delay` | `number` | `300` | Son değer değişikliğinden sonra beklenecek süre (milisaniye). |
 
-#### Return value
+#### Dönüş değeri
 
-The debounced value. On the first render it equals `value`. After that it
-updates only once `value` has stayed unchanged for `delay` milliseconds.
+Gecikmeli olarak güncellenen değer döndürülür. İlk render sırasında dönüş değeri `value` ile aynıdır. Sonraki render'larda ise `value`, belirtilen `delay` süresi boyunca değişmeden kaldığında güncellenir.
 
-#### Notes
+#### Notlar
 
-- Values are compared with `Object.is`. An object or array created during
-  render is a new value on every render and restarts the delay each time, so
-  memoize it or debounce the primitive it is derived from.
-- Changing `delay` restarts the pending timer.
-- The pending timer is cleared when the component unmounts.
+- Değerler `Object.is` kullanılarak karşılaştırılır. Her render sırasında yeniden oluşturulan bir nesne veya dizi, yeni bir değer olarak algılanır ve bekleme süresini yeniden başlatır. Bu durumu önlemek için `useMemo` kullanarak değeri bellekte tutabilir veya nesneden türetilen ilkel bir değeri debounce edebilirsiniz.
+- `delay` değiştirildiğinde bekleyen zamanlayıcı yeniden başlatılır.
+- Bileşen DOM'dan kaldırıldığında bekleyen zamanlayıcı temizlenir.
 
-## Example
+## Örnek
 
 ```jsx
 import { useEffect, useState } from 'react';
@@ -73,7 +70,10 @@ function Search() {
 
   return (
     <>
-      <input value={search} onChange={(event) => setSearch(event.target.value)} />
+      <input
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+      />
       <ul>
         {results.map((item) => (
           <li key={item.id}>{item.name}</li>
@@ -84,20 +84,18 @@ function Search() {
 }
 ```
 
-## Requirements
+## Gereksinimler
 
-- React 16.8 or newer
-- A bundler or runtime that supports ES modules. The package is ESM-only.
+- React 16.8 veya üzeri.
+- ES modüllerini destekleyen bir paketleyici veya çalışma ortamı. Paket yalnızca ESM formatını destekler.
 
-### Why React is a peer dependency
+### React neden peer dependency olarak tanımlanıyor?
 
-A hook has to run on the same React instance as the component that calls it.
-If React were a regular dependency, the package manager could install a second
-copy, which breaks hooks with an "Invalid hook call" error and adds React to
-the bundle twice. Declaring it as a peer dependency makes the package use the
-React version the application already has.
+Bir hook, kendisini çağıran bileşenle aynı React örneği üzerinde çalışmalıdır. React normal bir bağımlılık olarak tanımlansaydı paket yöneticisi ikinci bir React kopyası yükleyebilirdi. Bu durum, hook'ların çalışmasını engelleyen `"Invalid hook call"` hatasına ve pakette React'in iki kez yer almasına neden olabilirdi.
 
-## Development
+React'i `peerDependency` olarak tanımlamak, paketin uygulamanın zaten kullandığı React sürümüyle çalışmasını sağlar.
+
+## Geliştirme
 
 ```sh
 npm install
@@ -106,14 +104,11 @@ npm run lint
 npm run build
 ```
 
-`dist/` is not committed. It is built by the `prepack` script, so it is always
-present in the tarball created by `npm pack` and `npm publish`.
+`dist/` klasörü Git deposuna eklenmez. Bu klasör, `prepack` betiği tarafından oluşturulur. Böylece `npm pack` ve `npm publish` komutlarıyla hazırlanan paketin içinde derlenmiş dosyaların bulunması sağlanır.
 
-### Trying the package locally
+### Paketi yerel olarak deneme
 
-Install the packed tarball in another React project. Unlike `npm link`, this
-installs exactly the files that would be published and does not leave a second
-copy of React in the dependency tree.
+Paketin yerel bir kopyasını başka bir React projesine yüklemek için oluşturulan `.tgz` dosyasını kullanabilirsin. `npm link` yönteminden farklı olarak bu yöntem, yayımlanacak dosyaların aynısını yükler ve bağımlılık ağacında ikinci bir React kopyası oluşması riskini azaltır.
 
 ```sh
 npm pack
@@ -121,22 +116,18 @@ cd ../my-app
 npm install ../usecraft/usecraft-1.0.0.tgz
 ```
 
-### Releasing
+### Yeni sürüm yayımlama
 
 ```sh
-npm version patch   # or minor / major
+npm version patch   # veya minor / major
 npm publish
 git push --follow-tags
 ```
 
-## Versioning
+## Sürüm Yönetimi
 
-This package follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`):
+Bu paket, [Semantic Versioning (Anlamsal Sürümleme)](https://semver.org/) standardını (`MAJOR.MINOR.PATCH`) takip eder.
 
-- **PATCH** – bug fixes that do not change the API.
-- **MINOR** – new, backwards compatible functionality.
-- **MAJOR** – breaking changes, such as a changed signature or a dropped React version.
-
-## License
-
-[MIT](./LICENSE)
+- **PATCH** – API'yi değiştirmeyen hata düzeltmeleri.
+- **MINOR** – Geriye dönük uyumlu yeni özellikler.
+- **MAJOR** – Fonksiyon imzasının değiştirilmesi veya desteklenen bir React sürümünün kaldırılması gibi geriye dönük uyumluluğu bozan değişiklikler.
