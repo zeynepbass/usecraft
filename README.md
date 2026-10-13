@@ -2,8 +2,6 @@
 
 Değerleri belirli bir süre boyunca değişmeden kaldıktan sonra güncellemek için kullanılan küçük bir React hook'u.
 
-[![CI](https://github.com/zeynepbass/usecraft/actions/workflows/ci.yml/badge.svg)](https://github.com/zeynepbass/usecraft/actions/workflows/ci.yml)
-
 ## Kurulum
 
 ```sh
